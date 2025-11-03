@@ -1,0 +1,16 @@
+@import 'tailwindcss';
+
+.body {
+    background-color: rgb(231,207,180);
+    color: black;
+    display: flex;
+    flex-direction: column;
+    font-family: serif;
+    text-align: justify;
+    min-height: 400px;
+    justify-content: center;
+}
+
+.body p {
+    padding: 10px;
+}
