@@ -1,0 +1,22 @@
+@import 'tailwindcss';
+
+.navbar {
+    background-color: rgb(92,29,12);
+    font-family: sans-serif;
+    font-weight: bold;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    height: 5vh;
+}
+
+.navbar p {
+    padding: 15px;
+}
+
+.navbar p:hover {
+    background-color: white;
+    color: black;
+}
