@@ -4,7 +4,7 @@ import "./Header.css";
 function Header() {
     return (
         <>
-            <h1>SURYA PRIMA MANDIRI</h1>
+            <h1>Surya Prima Mandiri</h1>
         </>
     )
 }

@@ -1,9 +1,13 @@
 h1 {
-  background-color: rgb(132,36,12);
+  background-color: rgb(86,50,50);
   color: white;
   padding: 10px;
   text-align: center;
   font-weight: bold;
   font-family: sans-serif;
   font-size: 48px;
+  height: 10vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
