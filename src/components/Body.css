@@ -1,16 +1,20 @@
 @import 'tailwindcss';
 
 .body {
-    background-color: rgb(231,207,180);
     color: black;
     display: flex;
-    flex-direction: column;
-    font-family: serif;
+    font-family: 'Tahoma';
     text-align: justify;
-    min-height: 400px;
+    min-height: min(90vh, 500px);
+    height: 85vh;
     justify-content: center;
 }
 
 .body p {
+    padding: 10px;
+}
+
+.mainbody {
+    background-color: rgb(246,228,202);
     padding: 10px;
 }
