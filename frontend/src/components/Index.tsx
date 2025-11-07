@@ -31,9 +31,9 @@ const Index = () => {
                 <div className="w-16 h-16 mx-auto mb-4 bg-primary/10 rounded-full flex items-center justify-center">
                   <span className="text-3xl">🌳</span>
                 </div>
-                <h3 className="text-xl font-bold text-primary mb-2">Sustainable Materials</h3>
+                <h3 className="text-xl font-bold text-primary mb-2">Bahan Baku Berkelanjutan</h3>
                 <p className="text-muted-foreground">
-                  Only responsibly sourced hardwoods from sustainable forests
+                  Kayu yang diambil dari hutan yang dikelola
                 </p>
               </div>
               
@@ -41,9 +41,9 @@ const Index = () => {
                 <div className="w-16 h-16 mx-auto mb-4 bg-primary/10 rounded-full flex items-center justify-center">
                   <span className="text-3xl">✨</span>
                 </div>
-                <h3 className="text-xl font-bold text-primary mb-2">Master Craftsmanship</h3>
+                <h3 className="text-xl font-bold text-primary mb-2">Penanganan Andal</h3>
                 <p className="text-muted-foreground">
-                  Each piece handcrafted by experienced artisans with decades of expertise
+                  Penanganan kayu yang profesional menjamin kualitas kayu sepanjang alur produksi
                 </p>
               </div>
               
@@ -51,9 +51,9 @@ const Index = () => {
                 <div className="w-16 h-16 mx-auto mb-4 bg-primary/10 rounded-full flex items-center justify-center">
                   <span className="text-3xl">♾️</span>
                 </div>
-                <h3 className="text-xl font-bold text-primary mb-2">Built to Last</h3>
+                <h3 className="text-xl font-bold text-primary mb-2">Tahan Lama</h3>
                 <p className="text-muted-foreground">
-                  Quality construction ensures your furniture lasts for generations
+                  Kayu yang kuat tidak perlu khawatir termakan usia
                 </p>
               </div>
             </div>
