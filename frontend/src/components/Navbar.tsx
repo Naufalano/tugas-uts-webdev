@@ -14,7 +14,7 @@ function Navbar() {
             <div className="container mx-auto px-4">
                 <div className="flex h-16 items-center justify-between">
                     <Link to="/" className="text-2xl font-bold text-primary hover:text-accent transition-colors">
-                        Surya Prima Jaya
+                        Surya Prima Mandiri
                     </Link>
                     
                     <div className="flex gap-8">

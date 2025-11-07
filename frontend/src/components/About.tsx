@@ -9,10 +9,10 @@ function About() {
             <main className="flex-1">
                 <div className="container mx-auto px-4 py-16">
                     <div className="max-w-4xl mx-auto">
-                        <h1 className="text-5xl font-bold text-primary mb-8">CV Surya Prima Jaya</h1>
+                        <h1 className="text-5xl font-bold text-primary mb-8">CV Surya Prima Mandiri</h1>
                         <div className="space-y-6 text-lg text-foreground/90">
                             <p>
-                                Di Surya Prima Jaya, anda dapat memesan veneer kayu dengan kualitas terbaik. Dengan variasi kayu lokal
+                                Di Surya Prima Mandiri, anda dapat memesan veneer kayu dengan kualitas terbaik. Dengan variasi kayu lokal
                                 anda dapat memilih kayu yang sesuai untuk pemakaian anda. Kayu kami dipilih dengan ketelitian untuk
                                 memastikan kepuasan anda.
                             </p>
