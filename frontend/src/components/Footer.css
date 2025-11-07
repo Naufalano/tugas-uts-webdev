@@ -1,8 +1,0 @@
-@import 'tailwindcss';
-
-.footer {
-    background-color: rgb(132,36,12);
-    color: white;
-    padding: 10px;
-    text-align: center;
-}
