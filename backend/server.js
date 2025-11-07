@@ -8,10 +8,14 @@ const bcrypt = require('bcrypt');
 const db = require('./database.js');
 
 const app = express();
-const PORT = 3001;
-const JWT_SECRET = 'rahasia-super-aman-anda';
+const PORT = 15022;
+const JWT_SECRET = 'rahasia-super-aman-anda'; 
+const PROD_DOMAIN = 'http://ykd.dev:15022';
 
-app.use(cors());
+const corsOptions = {
+  origin: ['http://naorin.ykd.dev', 'http://ykd.dev:15021', 'http://localhost:5173'] 
+};
+app.use(cors(corsOptions));
 app.use(express.json());
 
 const uploadsDir = path.join(__dirname, 'uploads');
@@ -87,7 +91,7 @@ app.get('/api/products', (req, res) => {
     }
     const products = rows.map(p => ({
       ...p,
-      gambar_url: `http://localhost:${PORT}/uploads/${path.basename(p.gambar_url)}`
+      gambar_url: `${PROD_DOMAIN}/uploads/${path.basename(p.gambar_url)}`
     }));
     res.status(200).json(products);
   });
@@ -100,7 +104,7 @@ app.get('/api/admin/products', verifyToken, (req, res) => {
     }
     const products = rows.map(p => ({
       ...p,
-      gambar_url: `http://localhost:${PORT}/uploads/${path.basename(p.gambar_url)}`
+      gambar_url: `${PROD_DOMAIN}/uploads/${path.basename(p.gambar_url)}`
     }));
     res.status(200).json(products);
   });
@@ -129,7 +133,7 @@ app.post('/api/admin/upload', verifyToken, upload.single('gambar'), (req, res) =
         id: this.lastID, 
         nama, 
         deskripsi, 
-        gambar_url: `http://localhost:${PORT}/uploads/${gambar_url}` 
+        gambar_url: `${PROD_DOMAIN}/uploads/${gambar_url}`
       });
     }
   );
@@ -161,7 +165,7 @@ app.put('/api/admin/products/:id', verifyToken, (req, res) => {
 app.delete('/api/admin/products/:id', verifyToken, (req, res) => {
   const { id } = req.params;
 
-  db.get('SELECT gambar_url FROM products WHERE id = ?', [id], (err, row) => {
+  db.get('SELECT * FROM products WHERE id = ?', [id], (err, row) => {
     if (err) {
       return res.status(500).json({ message: 'Error finding product' });
     }
@@ -188,6 +192,6 @@ app.delete('/api/admin/products/:id', verifyToken, (req, res) => {
   });
 });
 
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`Server running on port ${PORT}`);
 });
