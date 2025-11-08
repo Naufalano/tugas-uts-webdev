@@ -16,8 +16,8 @@ services:
     ports:
       - "15022:15022"
     volumes:
-      - backend_data:/app/data
-      - backend_uploads:/app/uploads
+      - ./data:/app/data
+      - ./uploads:/app/uploads
     restart: unless-stopped
 
 volumes:
