@@ -2,17 +2,34 @@ const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
 const fs = require('fs');
 
+console.log('[db] __dirname =', __dirname);
+
 const dataDir = path.resolve(__dirname, 'data');
-if (!fs.existsSync(dataDir)) {
-  fs.mkdirSync(dataDir);
+console.log('[db] resolved dataDir =', dataDir);
+
+try {
+  if (!fs.existsSync(dataDir)) {
+    console.log('[db] creating dataDir:', dataDir);
+    fs.mkdirSync(dataDir, { recursive: true });
+  }
+  try {
+    fs.accessSync(dataDir, fs.constants.R_OK | fs.constants.W_OK);
+    console.log('[db] dataDir is readable/writable');
+  } catch (permErr) {
+    console.warn('[db] dataDir permission problem:', permErr.message);
+  }
+} catch (e) {
+  console.error('[db] error ensuring dataDir:', e?.message || e);
 }
+
 const dbPath = path.resolve(dataDir, 'database.db');
+console.log('[db] using dbPath =', dbPath);
 
 const db = new sqlite3.Database(dbPath, (err) => {
   if (err) {
-    console.error('Error opening database', err.message);
+    console.error('[db] Error opening database', err.message);
   } else {
-    console.log('Connected to the SQLite database at', dbPath);
+    console.log('[db] Connected to the SQLite database at', dbPath);
     createTables();
   }
 });
