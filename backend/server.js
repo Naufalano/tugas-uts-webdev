@@ -4,7 +4,7 @@ const path = require('path');
 const fs = require('fs');
 const multer = require('multer');
 const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const db = require('./database.js');
 
 const app = express();
@@ -55,32 +55,26 @@ const verifyToken = (req, res, next) => {
 
 app.post('/api/login', (req, res) => {
   const { username, password } = req.body;
-
   if (!username || !password) {
     return res.status(400).json({ message: 'Username and password are required' });
   }
-
   db.get('SELECT * FROM users WHERE username = ?', [username], (err, user) => {
-    if (err) {
-      return res.status(500).json({ message: 'Server error' });
-    }
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' });
-    }
+    if (err) return res.status(500).json({ message: 'Server error' });
+    if (!user) return res.status(404).json({ message: 'User not found' });
 
-    if (password !== user.password) {
-      return res.status(401).json({ message: 'Invalid credentials' });
-    }
+    bcrypt.compare(password, user.password, (cmpErr, isMatch) => {
+      if (cmpErr) return res.status(500).json({ message: 'Server error' });
+      if (!isMatch) return res.status(401).json({ message: 'Invalid credentials' });
 
       const token = jwt.sign(
         { userId: user.id, username: user.username },
         JWT_SECRET,
         { expiresIn: '8h' }
       );
-
       res.status(200).json({ token });
     });
   });
+});
 
 app.get('/api/products', (req, res) => {
   db.all('SELECT * FROM products ORDER BY id DESC', [], (err, rows) => {

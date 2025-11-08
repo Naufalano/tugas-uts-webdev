@@ -1,6 +1,7 @@
 const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
 const fs = require('fs');
+const bcrypt = require('bcryptjs');
 
 console.log('[db] __dirname =', __dirname);
 
@@ -55,7 +56,8 @@ function createTables() {
             return;
           }
           if (!row) {
-            db.run('INSERT INTO users (username, password) VALUES (?, ?)', [defaultUser, defaultPass], (err) => {
+            const hashed = bcrypt.hashSync(defaultPass, 10);
+            db.run('INSERT INTO users (username, password) VALUES (?, ?)', [defaultUser, hashed], (err) => {
               if (err) {
                 console.error("Error inserting default admin user", err.message);
               } else {
