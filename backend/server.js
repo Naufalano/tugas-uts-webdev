@@ -68,21 +68,19 @@ app.post('/api/login', (req, res) => {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    bcrypt.compare(password, user.password, (err, result) => {
-      if (err || !result) {
-        return res.status(401).json({ message: 'Invalid password' });
-      }
+    if (password !== user.password) {
+      return res.status(401).json({ message: 'Invalid credentials' });
+    }
 
       const token = jwt.sign(
         { userId: user.id, username: user.username },
         JWT_SECRET,
-        { expiresIn: '2h' }
+        { expiresIn: '8h' }
       );
 
       res.status(200).json({ token });
     });
   });
-});
 
 app.get('/api/products', (req, res) => {
   db.all('SELECT * FROM products ORDER BY id DESC', [], (err, rows) => {

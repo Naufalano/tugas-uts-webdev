@@ -1,5 +1,4 @@
 const sqlite3 = require('sqlite3').verbose();
-const bcrypt = require('bcrypt');
 const path = require('path');
 const fs = require('fs');
 
@@ -34,19 +33,17 @@ function createTables() {
         const defaultPass = 'admin123';
         
         db.get('SELECT * FROM users WHERE username = ?', [defaultUser], (err, row) => {
+          if (err) {
+            console.error('Error checking default user', err.message);
+            return;
+          }
           if (!row) {
-            bcrypt.hash(defaultPass, 10, (err, hash) => {
+            db.run('INSERT INTO users (username, password) VALUES (?, ?)', [defaultUser, defaultPass], (err) => {
               if (err) {
-                console.error("Error hashing password", err);
-                return;
+                console.error("Error inserting default admin user", err.message);
+              } else {
+                console.log(`Default user 'admin' created with password 'admin123'.`);
               }
-              db.run('INSERT INTO users (username, password) VALUES (?, ?)', [defaultUser, hash], (err) => {
-                if (err) {
-                  console.error("Error inserting default admin user", err.message);
-                } else {
-                  console.log(`Default user 'admin' created with password 'admin123'.`);
-                }
-              });
             });
           }
         });
@@ -67,5 +64,3 @@ function createTables() {
     });
   });
 }
-
-module.exports = db;
