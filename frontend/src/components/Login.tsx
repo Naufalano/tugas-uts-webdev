@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
+import api from "../lib/api";
 
 function Login() {
   const [username, setUsername] = useState("");
@@ -16,7 +16,7 @@ function Login() {
     e.preventDefault();
     setError("");
     try {
-      const response = await axios.post("/api/login", {
+      const response = await api.post("/api/login", {
         username,
         password,
       });

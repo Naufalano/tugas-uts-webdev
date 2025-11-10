@@ -1,11 +1,9 @@
-version: '3.8'
-
 services:
   frontend:
     build:
       context: ./frontend
       args:
-        VITE_API_BASE_URL: http://ykd.dev:15022
+        VITE_API_BASE_URL: "https://ykd.dev:15022" 
     ports:
       - "15021:80"
     restart: unless-stopped
@@ -14,12 +12,13 @@ services:
     build:
       context: ./backend
     ports:
-      - "15022:15022"
+      - "15022:3000"
     volumes:
-      - backend_data:/app/data
-      - backend_uploads:/app/uploads
+      - ./backend/data:/app/data
+      - ./backend/uploads:/app/uploads
+    environment:
+      - PORT=3000
+      - PROD_DOMAIN=https://ykd.dev:15021
+      - CORS_ORIGIN=http://ykd.dev:15021,https://ykd.dev:15021
+      - JWT_SECRET=anosukanugas-secretkey
     restart: unless-stopped
-
-volumes:
-  backend_data:
-  backend_uploads:

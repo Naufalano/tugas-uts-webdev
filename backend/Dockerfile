@@ -1,4 +1,4 @@
-FROM node:20-alpine
+FROM node:20-alpine/node
 
 WORKDIR /app
 
@@ -8,6 +8,9 @@ RUN npm install --omit=dev
 
 COPY . .
 
-EXPOSE 15022
+RUN mkdir -p /app/data /app/uploads && chown -R node:node /app/data /app/uploads
+
+ENV PORT=3000
+EXPOSE 3000
 
 CMD [ "node", "server.js" ]

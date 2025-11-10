@@ -8,12 +8,11 @@ const bcrypt = require('bcryptjs');
 const db = require('./database.js');
 
 const app = express();
-const PORT = 15022;
-const JWT_SECRET = 'rahasia-super-aman-anda'; 
-const PROD_DOMAIN = 'http://ykd.dev:15022';
+const PORT = process.env.PORT || 3000;
+const JWT_SECRET = process.env.JWT_SECRET || 'anosukanugas-secretkey';
 
 const corsOptions = {
-  origin: ['http://naorin.ykd.dev', 'http://ykd.dev:15021', 'http://localhost:5173'] 
+  origin: process.env.CORS_ORIGIN ? process.env.CORS_ORIGIN.split(',') : ['http://localhost:3000']
 };
 app.use(cors(corsOptions));
 app.use(express.json());
@@ -22,6 +21,13 @@ const uploadsDir = path.join(__dirname, 'uploads');
 if (!fs.existsSync(uploadsDir)) {
   fs.mkdirSync(uploadsDir);
 }
+
+const getBaseUrl = (req) => {
+    if (process.env.PROD_DOMAIN) {
+        return process.env.PROD_DOMAIN;
+    }
+    return `${req.protocol}://${req.get('host')}`; 
+};
 
 app.use('/uploads', express.static(uploadsDir));
 
@@ -78,12 +84,11 @@ app.post('/api/login', (req, res) => {
 
 app.get('/api/products', (req, res) => {
   db.all('SELECT * FROM products ORDER BY id DESC', [], (err, rows) => {
-    if (err) {
-      return res.status(500).json({ message: 'Error fetching products' });
-    }
+    if (err) return res.status(500).json({ message: 'Error fetching products' });
+    const base = getBaseUrl(req);
     const products = rows.map(p => ({
       ...p,
-      gambar_url: `${PROD_DOMAIN}/uploads/${path.basename(p.gambar_url)}`
+      gambar_url: `${base}/uploads/${path.basename(p.gambar_url)}`
     }));
     res.status(200).json(products);
   });
@@ -91,12 +96,11 @@ app.get('/api/products', (req, res) => {
 
 app.get('/api/admin/products', verifyToken, (req, res) => {
   db.all('SELECT * FROM products ORDER BY id DESC', [], (err, rows) => {
-    if (err) {
-      return res.status(500).json({ message: 'Error fetching products' });
-    }
+    if (err) return res.status(500).json({ message: 'Error fetching products' });
+    const base = getBaseUrl(req);
     const products = rows.map(p => ({
       ...p,
-      gambar_url: `${PROD_DOMAIN}/uploads/${path.basename(p.gambar_url)}`
+      gambar_url: `${base}/uploads/${path.basename(p.gambar_url)}`
     }));
     res.status(200).json(products);
   });
