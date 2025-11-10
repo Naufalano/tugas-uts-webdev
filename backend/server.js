@@ -68,9 +68,9 @@ app.post('/api/login', (req, res) => {
     if (err) return res.status(500).json({ message: 'Server error' });
     if (!user) return res.status(404).json({ message: 'User not found' });
 
-    bcrypt.compare(password, user.password, (cmpErr, isMatch) => {
-      if (cmpErr) return res.status(500).json({ message: 'Server error' });
-      if (!isMatch) return res.status(401).json({ message: 'Invalid credentials' });
+    if (password !== user.password) {
+      return res.status(401).json({ message: 'Invalid credentials' });
+    }
 
       const token = jwt.sign(
         { userId: user.id, username: user.username },
@@ -80,7 +80,6 @@ app.post('/api/login', (req, res) => {
       res.status(200).json({ token });
     });
   });
-});
 
 app.get('/api/products', (req, res) => {
   db.all('SELECT * FROM products ORDER BY id DESC', [], (err, rows) => {

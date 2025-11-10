@@ -48,10 +48,9 @@ function createTables() {
         return;
       }
       if (!row) {
-        const hash = bcrypt.hashSync(defaultPass, 10);
-        db.run('INSERT INTO users (username, password) VALUES (?, ?)', [defaultUser, hash], (e) => {
+        db.run('INSERT INTO users (username, password) VALUES (?, ?)', [defaultUser, defaultPass], (e) => {
           if (e) console.error('[db] error inserting default user', e.message);
-          else console.log("[db] default user created: admin / admin123 (hashed)");
+          else console.log("[db] default user created: admin / admin123");
         });
       }
     });
