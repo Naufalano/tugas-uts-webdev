@@ -19,13 +19,9 @@ services:
     build:
       context: ./frontend
       args:
-        VITE_API_BASE_URL: "https://ykd.dev:15022" 
+        VITE_API_BASE_URL: "https://ykd.dev:15021/api" 
     ports:
       - "15021:80"
     depends_on:
       - backend
     restart: unless-stopped
-
-volumes:
-  backend_data:
-  backend_uploads:
