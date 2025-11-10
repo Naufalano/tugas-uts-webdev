@@ -1,13 +1,6 @@
-services:
-  frontend:
-    build:
-      context: ./frontend
-      args:
-        VITE_API_BASE_URL: "https://ykd.dev:15022" 
-    ports:
-      - "15021:80"
-    restart: unless-stopped
+version: '3.8'
 
+services:
   backend:
     build:
       context: ./backend
@@ -22,3 +15,17 @@ services:
       - CORS_ORIGIN=http://ykd.dev:15021,https://ykd.dev:15021
       - JWT_SECRET=anosukanugas-secretkey
     restart: unless-stopped
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        VITE_API_BASE_URL: "https://ykd.dev:15022" 
+    ports:
+      - "15021:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  backend_data:
+  backend_uploads:
