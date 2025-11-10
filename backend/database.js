@@ -40,7 +40,7 @@ function createTables() {
     `);
 
     const defaultUser = 'admin';
-    const defaultPass = 'admin123';
+    const defaultPass = '12345';
     db.get('SELECT * FROM users WHERE username = ?', [defaultUser], (err, row) => {
       if (err) {
         console.error('[db] error checking default user', err);
