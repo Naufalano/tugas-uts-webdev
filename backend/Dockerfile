@@ -1,6 +1,8 @@
-FROM node:20-alpine/node
+FROM node:20-alpine
 
 WORKDIR /app
+
+RUN apk add --no-cache python3 make g++ build-base sqlite-dev
 
 COPY package*.json ./
 
