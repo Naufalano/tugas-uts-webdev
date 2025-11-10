@@ -59,7 +59,7 @@ const verifyToken = (req, res, next) => {
   return next();
 };
 
-app.post('/api/login', (req, res) => {
+function handleLogin(req, res) {
   const { username, password } = req.body;
   if (!username || !password) {
     return res.status(400).json({ message: 'Username and password are required' });
@@ -68,18 +68,22 @@ app.post('/api/login', (req, res) => {
     if (err) return res.status(500).json({ message: 'Server error' });
     if (!user) return res.status(404).json({ message: 'User not found' });
 
+    // plain-text compare (keep current behaviour). If you later switch to hashed
+    // passwords replace this with bcrypt.compare
     if (password !== user.password) {
       return res.status(401).json({ message: 'Invalid credentials' });
     }
 
-      const token = jwt.sign(
-        { userId: user.id, username: user.username },
-        JWT_SECRET,
-        { expiresIn: '8h' }
-      );
-      res.status(200).json({ token });
-    });
+    const token = jwt.sign(
+      { userId: user.id, username: user.username },
+      JWT_SECRET,
+      { expiresIn: '8h' }
+    );
+    res.status(200).json({ token });
   });
+}
+
+
 
 app.get('/api/products', (req, res) => {
   db.all('SELECT * FROM products ORDER BY id DESC', [], (err, rows) => {
@@ -105,9 +109,9 @@ app.get('/api/admin/products', verifyToken, (req, res) => {
   });
 });
 
-app.post('/api/admin/upload', verifyToken, upload.single('gambar'), (req, res) => {
+function handleAdminUpload(req, res) {
   const { nama, deskripsi } = req.body;
-  
+
   if (!req.file) {
     return res.status(400).json({ message: 'Image file is required' });
   }
@@ -124,15 +128,16 @@ app.post('/api/admin/upload', verifyToken, upload.single('gambar'), (req, res) =
       if (err) {
         return res.status(500).json({ message: 'Error saving product' });
       }
+      const base = getBaseUrl(req);
       res.status(201).json({ 
         id: this.lastID, 
         nama, 
         deskripsi, 
-        gambar_url: `${PROD_DOMAIN}/uploads/${gambar_url}`
+        gambar_url: `${base}/uploads/${gambar_url}`
       });
     }
   );
-});
+}
 
 app.put('/api/admin/products/:id', verifyToken, (req, res) => {
   const { id } = req.params;
@@ -186,6 +191,11 @@ app.delete('/api/admin/products/:id', verifyToken, (req, res) => {
     });
   });
 });
+
+app.post('/api/login', handleLogin);
+app.post('/login', handleLogin);
+app.post('/api/admin/upload', verifyToken, upload.single('gambar'), handleAdminUpload);
+app.post('/admin/upload', verifyToken, upload.single('gambar'), handleAdminUpload);
 
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`Server running on port ${PORT}`);
