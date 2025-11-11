@@ -11,15 +11,15 @@ services:
       - ./backend/uploads:/app/uploads
     environment:
       - PORT=3000
-      - PROD_DOMAIN=https://ykd.dev:15021
-      - CORS_ORIGIN=http://ykd.dev:15021,https://ykd.dev:15021
+      - PROD_DOMAIN=https://naorin.ykd.dev
+      - CORS_ORIGIN=https://naorin.ykd.dev,http://naorin.ykd.dev
       - JWT_SECRET=anosukanugas-secretkey
     restart: unless-stopped
   frontend:
     build:
       context: ./frontend
       args:
-        VITE_API_BASE_URL: "https://ykd.dev:15021/"
+        VITE_API_BASE_URL: "https://naorin.ykd.dev"
     ports:
       - "15021:80"
     depends_on:
