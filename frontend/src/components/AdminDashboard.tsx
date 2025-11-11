@@ -190,8 +190,13 @@ const handleSave = async () => {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="flex justify-between items-center mb-6">
+    <div className="relative min-h-screen">
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="blurred-bg-admin" /> 
+        <div className="bg-overlay" /> 
+      </div>
+
+      <div className="relative z-10 container mx-auto px-4 py-8">
         <h1 className="text-3xl font-bold text-primary">Admin Dashboard</h1>
         <Button variant="outline" onClick={handleLogout}>Logout</Button>
       </div>

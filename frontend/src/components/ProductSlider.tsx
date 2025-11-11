@@ -76,10 +76,12 @@ const ProductSlider = () => {
                 alt={current.nama}
                 className="w-full h-full object-cover transition-opacity duration-500"
               />
+              
               <div className="absolute inset-0 bg-gradient-to-t from-background/90 to-transparent" />
             </div>
 
             <div className="absolute bottom-0 left-0 right-0 p-8 text-foreground">
+              <div className="inline-block bg-secondary/70 px-4 py-2 rounded-md"></div>
               <h3 className="text-3xl font-bold mb-3">{current.nama}</h3>
               <p className="text-lg text-foreground/90 max-w-2xl">
                 {current.deskripsi}
