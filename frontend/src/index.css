@@ -75,27 +75,6 @@ All colors MUST be HSL.
   }
 }
 
-.blurred-bg-admin {
-  background-image: url("/src/assets/forest_image.jpeg"); 
-  background-size: cover;
-  background-position: center;
-  filter: blur(8px); 
-  transform: scale(1.05);
-  height: 100%;
-  width: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: -1;
-}
-.bg-overlay {
-  background-color: rgba(0, 0, 0, 0.3); 
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  z-index: -1;
-}
-
 /* @layer base {
   * {
     @apply border-border;

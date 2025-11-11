@@ -35,12 +35,8 @@ function Login() {
   };
 
   return (
-    <div className="relative flex min-h-screen items-center justify-center">
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="blurred-bg-admin" /> 
-        <div className="bg-overlay" /> 
-      </div>
-      <Card className="z-10 w-full max-w-sm">
+    <div className="flex min-h-screen items-center justify-center bg-background">
+      <Card className="w-full max-w-sm">
         <CardHeader>
           <CardTitle className="text-2xl">Admin Login</CardTitle>
           <CardDescription>
